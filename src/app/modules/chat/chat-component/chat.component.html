@@ -1,0 +1,7 @@
+
+<div *ngFor="let message of messages" [ngClass]="{ 'local-user-msg': message.isMine }">
+  {{message.message}} from {{ message.userName }}
+</div>
+
+<input [(ngModel)]="userMsg" (keyup)="$event.keyCode == 13 && sendMyMessage()" />
+<button (click)="sendMyMessage()">Send</button>
