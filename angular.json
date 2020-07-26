@@ -123,6 +123,10 @@
           }
         }
       }
-    }},
-  "defaultProject": "angular-chat-socketio"
+    }
+  },
+  "defaultProject": "angular-chat-socketio",
+  "cli": {
+    "analytics": false
+  }
 }
