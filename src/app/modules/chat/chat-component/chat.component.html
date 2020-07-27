@@ -1,7 +1,36 @@
 
-<div *ngFor="let message of messages" [ngClass]="{ 'local-user-msg': message.isMine }">
-  {{message.message}} from {{ message.userName }}
+<div class="chat-container">
+
+  <div class="chat-msgs-container">
+    <div *ngFor="let message of messages.slice().reverse()" class="msg-data">
+      <span class="user-name"
+        [ngClass]="{ 'right-user-name': message.userId === activeUserData.userId }"
+        >
+        {{ message.userName }}
+      </span>
+      <div class="msg-bubble left-bubble" [ngClass]="{ 'right-bubble': message.userId === activeUserData.userId }">
+        <p>{{message.message}}</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="msg-container">
+    <mat-form-field appearance="outline" class="input-msg">
+      <input matInput
+        name="userMsg"
+        [(ngModel)]="userMsg"
+        (keyup)="$event.keyCode == 13 && sendMyMessage()"
+        placeholder="Escribe un mensaje"
+        />
+    </mat-form-field>
+
+    <button mat-raised-button
+      color="primary"
+      class="enviar-button"
+      type="button"
+      (click)="sendMyMessage()">
+      Enviar
+    </button>
+  </div>
 </div>
 
-<input [(ngModel)]="userMsg" (keyup)="$event.keyCode == 13 && sendMyMessage()" />
-<button (click)="sendMyMessage()">Send</button>

@@ -1,3 +1,80 @@
+@import "../../../../styles.sass"
 
 .local-user-msg
   color: red
+
+.chat-container
+  // margin: 8px
+  height: 90%
+  width: 750px
+  @extend %flex-column
+
+.chat-msgs-container
+  flex: 1 1 90%
+  // @extend %flex-column
+  display: flex
+  flex-direction: column-reverse
+  background-color: #E8EEF8
+  border: 1px solid #ccc
+  overflow: scroll
+
+.msg-data
+  display: flex
+  flex-direction: column
+
+.user-name
+  align-self: start
+  margin: 0rem 0.75rem
+
+.right-user-name
+  align-self: flex-end
+  margin: 0rem 0.75rem
+
+.msg-bubble
+  flex: 1 1 auto
+  flex-direction: column
+  p
+    border-radius: 5px
+    padding: 8px
+    margin: 8px 12px
+    max-width: 80%
+    position: relative
+    transition: background-color 0.5s
+
+.left-bubble
+  p
+    background-color: #F6F9FD
+    color: #343F61
+    float: left
+
+.right-bubble
+  p
+    background-color: #3f51b5
+    color: #fff
+    float: right
+
+.msg-container
+  flex: 0 0 32px
+  display: flex
+  border: 1px solid #ddd
+  //
+  display: flex
+  flex-direction: row
+  align-items: center
+  padding: 0.5rem 1rem 0rem 1rem
+
+  .enviar-button
+    margin-bottom: 1.5rem
+    align-self: normal
+    margin-top: 0.3rem
+    margin-left: 1rem
+    //
+    flex: 0 0 20%
+
+  .input-msg
+    flex: 1 1 auto
+
+@media (max-width: $bp-small)
+
+  .chat-container
+    width: 100%
