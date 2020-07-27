@@ -1,0 +1,16 @@
+@import "../../../../styles.sass"
+
+.form-container
+  @extend %flex-column
+  width: 550px
+
+.save-button
+  align-self: flex-end
+
+@media (max-width: $bp-small)
+
+  .form-container
+    width: auto
+
+  .save-button
+    align-self: auto
