@@ -1,0 +1,12 @@
+runtime: nodejs12
+env: standard
+instance_class: F1
+handlers:
+  - url: /(.*\..+)$
+    static_files: dist/app-web-morales/\1
+    require_matching_file: false
+    upload: dist/app-web-morales/(.*\..+)$
+  - url: /.*
+    static_files: dist/app-web-morales/index.html
+    require_matching_file: false
+    upload: dist/app-web-morales/index.html
