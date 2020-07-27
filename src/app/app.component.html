@@ -10,11 +10,13 @@
 <!-- * * * * * * * * * * End of Placeholder * * * * * * * * * * * -->
 <!-- * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * -->
 
-<h1>
-  Chat
-</h1>
+<mat-toolbar color="primary">
+  <span>Chat Web</span>
+  <span class="example-spacer"></span>
+  <a mat-button routerLink="/config" >Config</a>
+  <a mat-button routerLink="/chat">Chat</a>
+</mat-toolbar>
 
-<button routerLink="/config">Config</button>
-<button routerLink="/chat">Chat</button>
-
-<router-outlet></router-outlet>
+<div class="routes-container">
+  <router-outlet></router-outlet>
+</div>
