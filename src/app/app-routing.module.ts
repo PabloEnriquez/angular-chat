@@ -10,6 +10,10 @@ const routes: Routes = [
     path: 'chat',
     loadChildren: () => import('./modules/chat/chat.module').then(m => m.ChatModule)
   },
+  {
+    path: 'graphs',
+    loadChildren: () => import('./modules/graphs/graphs.module').then(m => m.GraphsModule)
+  },
   { path: '**', redirectTo: '' },
 ];
 
