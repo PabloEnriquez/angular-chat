@@ -1,5 +1,12 @@
+@import "../../../../styles.sass"
 
+.data-container
+  @extend %flex-column
 
+.label-line, .data-line
+  display: flex
+  flex-direction: row
+  justify-content: space-between
 
 .main-container
   width: 300px
@@ -14,6 +21,9 @@
   left: 0
 
 .line-chart
-  z-index: 10
-  top: 42%
-  left: 27%
+  z-index: -1
+  top: 43%
+  left: 29%
+
+hr
+  width: 100%

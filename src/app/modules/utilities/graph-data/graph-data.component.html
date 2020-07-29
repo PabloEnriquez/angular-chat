@@ -1,27 +1,60 @@
 
-<div class="main-container">
+<div class="data-container">
 
-  <div class="dona-container" style="width: 300px; height: 150px;">
-    <canvas baseChart
-      [data]="doughnutChartData"
-      [labels]="doughnutChartLabels"
-      [colors]="colorsChart"
-      [options]="options"
-      [plugins]="doughnutChartPlugins"
-      [chartType]="doughnutChartType">
-    </canvas>
+  <div class="main-container">
+
+    <div class="dona-container" style="width: 300px; height: 150px;">
+      <canvas baseChart
+        [data]="doughnutChartData"
+        [labels]="doughnutChartLabels"
+        [colors]="doughnutChartColors"
+        [options]="doughnutChartOptions"
+        [plugins]="doughnutChartPlugins"
+        [chartType]="doughnutChartType">
+      </canvas>
+    </div>
+
+    <div class="line-chart">
+      <div class="" >
+        <canvas baseChart
+          id="line-chart"
+          [data]="lineChartData"
+          [labels]="lineChartLabels"
+          [options]="lineChartOptions"
+          [colors]="lineChartColors"
+          [chartType]="lineChartType"></canvas>
+      </div>
+    </div>
+
   </div>
 
-  <div class="line-chart">
-    <div class="" style="width: 135px; height: 65px;">
-      <canvas baseChart
-        id="line-chart"
-        [datasets]="lineChartData"
-        [labels]="lineChartLabels"
-        [options]="lineChartOptions"
-        [colors]="lineChartColors"
-        [chartType]="lineChartType"></canvas>
+  <div class="label-line">
+    <div> {{ graphData.leftLabel }} </div>
+    <div> {{ graphData.rightLabel }} </div>
+  </div>
+
+  <div class="data-line">
+    <div>
+      <span> {{ getPercentage(graphData.leftData) }}% </span>
+      <span>
+        {{ graphData.isRevenue
+          ? getCurrency(graphData.leftData)
+          : getNumber(graphData.leftData)
+        }}
+      </span>
+    </div>
+    <div>
+      <span> {{ getPercentage(graphData.righData) }}% </span>
+      <span>
+        {{ graphData.isRevenue
+          ? getCurrency(graphData.righData)
+          : getNumber(graphData.righData)
+        }}
+      </span>
     </div>
   </div>
 
+  <hr>
+
 </div>
+

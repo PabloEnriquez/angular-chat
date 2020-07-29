@@ -1,7 +1,8 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild, Input } from '@angular/core';
 import { ChartDataSets, ChartOptions, ChartType } from 'chart.js';
 import { Color, BaseChartDirective, Label, MultiDataSet, PluginServiceGlobalRegistrationAndOptions } from 'ng2-charts';
-// import * as pluginAnnotations from 'chartjs-plugin-annotation';
+import { GraphData } from 'src/app/models/models';
+import { formatCurrency, formatNumber } from '@angular/common';
 
 @Component({
   selector: 'app-graph-data',
@@ -10,11 +11,12 @@ import { Color, BaseChartDirective, Label, MultiDataSet, PluginServiceGlobalRegi
 })
 export class GraphDataComponent implements OnInit {
 
-  public lineChartData: ChartDataSets[] = [
-    { data: [65, 59, 80, 81, 56, 55, 40, 34, 55], label: 'Product A' },
-  ];
-  public lineChartLabels: Label[] = ['January', 'February', 'March', 'April', 'May', 'June', 'July', '', ''];
-  public lineChartOptions: ChartOptions = {
+  @Input() graphData: GraphData;
+
+  // line chart settings
+  lineChartData = [];
+  lineChartLabels: Label[] = [];
+  lineChartOptions: ChartOptions = {
     legend: {display: false},
     responsive: true,
     tooltips: {
@@ -33,23 +35,21 @@ export class GraphDataComponent implements OnInit {
       ]
     }
   };
-  public lineChartColors: Color[] = [
-    { // dark grey
-      backgroundColor: 'rgba(77,83,96,0.2)',
-      borderColor: 'rgba(77,83,96,1)',
-    },
+  lineChartColors: Color[] = [
+    // {
+    //   backgroundColor: '',
+    //   borderColor: '',
+    // },
   ];
-  public lineChartLegend = false;
-  public lineChartType = 'line';
-  // public lineChartPlugins = [pluginAnnotations];
+  lineChartLegend = false;
+  lineChartType = 'line';
 
-  doughnutChartLabels: Label[] = ['PUBG', 'Call of Duty', 'Fortnite'];
-  doughnutChartData: MultiDataSet = [
-    [53, 30]
-  ];
+  // doughnut chart settings
+  doughnutChartLabels: Label[] = [];
+  doughnutChartData: number[] = [];
   doughnutChartType: ChartType = 'doughnut';
-  colorsChart: any[] = [{ backgroundColor: ['#5BC790', '#ECB741', '#CD5A59']}];
-  options: any = {
+  doughnutChartColors: any[] = [];
+  doughnutChartOptions: any = {
     legend: {display: false},
     responsive: true,
     tooltips: {
@@ -57,10 +57,8 @@ export class GraphDataComponent implements OnInit {
     },
     plugins: {
       center: {
-        // text: this.contentData && this.contentData.txtPrimaTotal ? this.contentData.txtPrimaTotal : '',
-        // text2: this.contentData && this.contentData.primaTotal ? this.contentData.primaTotal : '',
-        txtPrimaTotal: 'REVENUE',
-        primaTotal: '200,000$',
+        txtCategory: '',
+        quantity: '',
         text3: '',
         fontColor: '#FF6384',
         fontFamily: '"Open Sans"',
@@ -87,65 +85,45 @@ export class GraphDataComponent implements OnInit {
         ctx.textBaseline = 'middle';
         ctx.font = `11px normal Open Sans`;
         ctx.fillStyle = '#647085';
-        ctx.fillText(config.txtPrimaTotal, centerX, centerY - 40);
+        ctx.fillText(config.txtCategory, centerX, centerY - 40);
         ctx.font = `16px normal Open Sans`;
         ctx.fillStyle = '#33445F';
-        ctx.fillText(config.primaTotal, centerX, centerY - 20);
+        ctx.fillText(config.quantity, centerX, centerY - 20);
       }
     }
   }];
 
   @ViewChild(BaseChartDirective, { static: false }) chart: BaseChartDirective;
 
+  tabletData: string;
+  smartPhData: string;
+
   constructor() { }
 
   ngOnInit(): void {
-  }
-
-  public randomize(): void {
-    for (let i = 0; i < this.lineChartData.length; i++) {
-      for (let j = 0; j < this.lineChartData[i].data.length; j++) {
-        this.lineChartData[i].data[j] = this.generateNumber(i);
-      }
+    this.lineChartData = this.graphData.lineChartData;
+    this.lineChartLabels = this.graphData.lineChartData.map(datElem => '');
+    this.lineChartColors.push(this.graphData.lineChartColor);
+    this.doughnutChartData = this.graphData.doughnutChartData;
+    this.doughnutChartColors.push(this.graphData.doughnutColor);
+    this.doughnutChartOptions.plugins.center.txtCategory = this.graphData.txtCategory;
+    if ( this.graphData.isRevenue ) {
+      this.doughnutChartOptions.plugins.center.quantity = formatCurrency(this.graphData.quantity, 'de-DE', '€');
+    } else {
+      this.doughnutChartOptions.plugins.center.quantity = formatNumber(this.graphData.quantity, 'de-DE');
     }
-    this.chart.update();
   }
 
-  private generateNumber(i: number) {
-    return Math.floor((Math.random() * (i < 2 ? 100 : 1000)) + 1);
+  getPercentage(targetValue: number): string {
+    return  `${ ((targetValue * 100) / this.graphData.quantity) }`;
   }
 
-  // events
-  public chartClicked({ event, active }: { event: MouseEvent, active: {}[] }): void {
-    console.log(event, active);
+  getCurrency(elemValue: number): string {
+    return formatCurrency(elemValue, 'de-DE', '€');
   }
 
-  public chartHovered({ event, active }: { event: MouseEvent, active: {}[] }): void {
-    console.log(event, active);
-  }
-
-  public hideOne() {
-    const isHidden = this.chart.isDatasetHidden(1);
-    this.chart.hideDataset(1, !isHidden);
-  }
-
-  public pushOne() {
-    this.lineChartData.forEach((x, i) => {
-      const num = this.generateNumber(i);
-      const data: number[] = x.data as number[];
-      data.push(num);
-    });
-    this.lineChartLabels.push(`Label ${this.lineChartLabels.length}`);
-  }
-
-  public changeColor() {
-    this.lineChartColors[2].borderColor = 'green';
-    this.lineChartColors[2].backgroundColor = `rgba(0, 255, 0, 0.3)`;
-  }
-
-  public changeLabel() {
-    this.lineChartLabels[2] = ['1st Line', '2nd Line'];
-    // this.chart.update();
+  getNumber(elemValue: number): string {
+    return formatNumber(elemValue, 'de-DE');
   }
 
 }
