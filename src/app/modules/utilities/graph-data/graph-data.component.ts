@@ -115,7 +115,7 @@ export class GraphDataComponent implements OnInit {
   }
 
   getPercentage(targetValue: number): string {
-    return  `${ ((targetValue * 100) / this.graphData.quantity) }`;
+    return `${ ((targetValue * 100) / this.graphData.quantity) }`;
   }
 
   getCurrency(elemValue: number): string {

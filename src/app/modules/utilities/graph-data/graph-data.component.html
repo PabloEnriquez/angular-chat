@@ -29,14 +29,14 @@
   </div>
 
   <div class="label-line">
-    <div> {{ graphData.leftLabel }} </div>
-    <div> {{ graphData.rightLabel }} </div>
+    <div [ngStyle]="{ color: graphData.doughnutColor.backgroundColor[1] }"> {{ graphData.leftLabel }} </div>
+    <div [ngStyle]="{ color: graphData.doughnutColor.backgroundColor[0] }"> {{ graphData.rightLabel }} </div>
   </div>
 
   <div class="data-line">
     <div>
-      <span> {{ getPercentage(graphData.leftData) }}% </span>
-      <span>
+      <span class="percentage-data"> {{ getPercentage(graphData.leftData) }}% </span>
+      <span class="section-data">
         {{ graphData.isRevenue
           ? getCurrency(graphData.leftData)
           : getNumber(graphData.leftData)
@@ -44,8 +44,8 @@
       </span>
     </div>
     <div>
-      <span> {{ getPercentage(graphData.righData) }}% </span>
-      <span>
+      <span class="percentage-data"> {{ getPercentage(graphData.righData) }}% </span>
+      <span class="section-data">
         {{ graphData.isRevenue
           ? getCurrency(graphData.righData)
           : getNumber(graphData.righData)
@@ -53,8 +53,6 @@
       </span>
     </div>
   </div>
-
-  <hr>
 
 </div>
 
