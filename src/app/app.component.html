@@ -11,10 +11,13 @@
 <!-- * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * -->
 
 <mat-toolbar color="primary">
-  <span>Chat Web</span>
+  <span [innerHTML]="getRouter().url.includes('graphs')
+    ? 'Gráficas' : 'Chat Web'"
+  ></span>
   <span class="example-spacer"></span>
   <a mat-button routerLink="/config" >Config</a>
   <a mat-button routerLink="/chat">Chat</a>
+  <a mat-button routerLink="/graphs">Gráficas</a>
 </mat-toolbar>
 
 <div class="routes-container">

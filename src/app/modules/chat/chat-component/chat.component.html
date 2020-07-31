@@ -1,6 +1,8 @@
 
 <div class="chat-container">
 
+  <span *ngIf="typingState.isTyping" class="is-typing"> {{ typingState.userName }} está escribiendo... </span>
+
   <div class="chat-msgs-container">
     <div *ngFor="let message of messages.slice().reverse()" class="msg-data">
       <span class="user-name"
@@ -19,7 +21,8 @@
       <input matInput
         name="userMsg"
         [(ngModel)]="userMsg"
-        (keyup)="$event.keyCode == 13 && sendMyMessage()"
+        (input)="typingChange($event.target.value)"
+        (keyup)="$event.keyCode === 13 && sendMyMessage()"
         placeholder="Escribe un mensaje"
         />
     </mat-form-field>

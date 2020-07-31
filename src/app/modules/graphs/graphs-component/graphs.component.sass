@@ -1,0 +1,19 @@
+@import "../../../../styles.sass"
+
+.graphs-container
+  display: flex
+  flex-flow: row wrap
+  justify-content: space-around
+  overflow: scroll
+
+app-graph-data
+  margin-bottom: 2rem
+
+@media (max-width: $bp-small)
+
+  .graphs-container
+    flex-direction: column
+    justify-content: start
+
+  .last-graph
+    margin-bottom: 6rem

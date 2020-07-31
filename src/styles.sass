@@ -9,11 +9,23 @@ $bp-small: 768px
 app-chat
   height: 95vh
 
+app-graphs
+  width: 100%
+
 html, body
   height: 100%
   overflow: hidden
 
+#line-chart
+  border-radius: 50%
+  width: 125px !important
+  height: 77px !important
+
 @media (max-width: $bp-small)
 
-  app-chat
+  app-chat, app-graphs
     padding: 0rem 1rem
+
+  app-graphs
+    width: auto
+    height: auto

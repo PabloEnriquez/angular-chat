@@ -1,0 +1,9 @@
+
+<div class="graphs-container">
+  <app-graph-data *ngFor="let graph of graphs; let indexGraph = index"
+    [graphData]="graph"
+    [ngClass]="{ 'last-graph': indexGraph === graphs.length - 1 }"
+    >
+  </app-graph-data>
+</div>
+
