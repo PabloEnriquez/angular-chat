@@ -1,5 +1,5 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { UserMessage, NewUser } from 'src/app/models/models';
+import { UserMessage, NewUser, TypingEvent } from 'src/app/models/models';
 import { SocketService } from 'src/app/services/socket.service';
 import { Subscription } from 'rxjs';
 import { Router } from '@angular/router';
@@ -14,9 +14,14 @@ export class ChatComponent implements OnInit, OnDestroy {
   userMsg = '';
   messages: UserMessage[] = [];
   activeUserData: NewUser;
+  typingState: TypingEvent = {
+    isTyping: false,
+    userName: ''
+  };
 
   activeUserSub: Subscription;
   msgsSub: Subscription;
+  typingSub: Subscription;
 
   constructor(
     private socketService: SocketService,
@@ -33,8 +38,10 @@ export class ChatComponent implements OnInit, OnDestroy {
       }
     });
     this.msgsSub = this.socketService.getMessagesList().subscribe((newMessage: UserMessage) => {
-      // newMessage.isMine = false;
       this.messages.push(newMessage);
+    });
+    this.typingSub = this.socketService.getTypingState().subscribe((userNameTyping: TypingEvent) => {
+      this.typingState = {...userNameTyping};
     });
   }
 
@@ -43,18 +50,31 @@ export class ChatComponent implements OnInit, OnDestroy {
       const newMsg: UserMessage = {
         userName: this.activeUserData.userName,
         message: this.userMsg,
-        // isMine: true,
         userId: this.activeUserData.userId
       };
       this.socketService.sendUserMessage(newMsg);
-      // this.messages.push(newMsg);
       this.userMsg = '';
+      this.socketService.setTypingUser({ isTyping: false, userName: this.userMsg });
     }
+  }
+
+  typingChange(typeEvent: string): void {
+    const typing: TypingEvent = {
+      isTyping: null,
+      userName: this.activeUserData.userName
+    };
+    if ( typeEvent.length > 0 ) {
+      typing.isTyping = true;
+    } else {
+      typing.isTyping = false;
+    }
+    this.socketService.setTypingUser(typing);
   }
 
   ngOnDestroy(): void {
     this.msgsSub.unsubscribe();
     this.activeUserSub.unsubscribe();
+    this.typingSub.unsubscribe();
   }
 
 }

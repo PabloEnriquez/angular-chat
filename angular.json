@@ -17,6 +17,10 @@
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
+            "allowedCommonJsDependencies" : [
+              "socket.io-client",
+              "chart.js"
+            ],
             "outputPath": "dist/angular-chat-socketio",
             "index": "src/index.html",
             "main": "src/main.ts",
