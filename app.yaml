@@ -3,10 +3,10 @@ env: standard
 instance_class: F1
 handlers:
   - url: /(.*\..+)$
-    static_files: dist/app-web-morales/\1
+    static_files: dist/angular-chat-socketio/\1
     require_matching_file: false
-    upload: dist/app-web-morales/(.*\..+)$
+    upload: dist/angular-chat-socketio/(.*\..+)$
   - url: /.*
-    static_files: dist/app-web-morales/index.html
+    static_files: dist/angular-chat-socketio/index.html
     require_matching_file: false
-    upload: dist/app-web-morales/index.html
+    upload: dist/angular-chat-socketio/index.html

@@ -1,0 +1,35 @@
+@import "../../../../styles.sass"
+
+.data-container
+  @extend %flex-column
+
+.label-line, .data-line
+  display: flex
+  flex-direction: row
+  justify-content: space-between
+
+.label-line
+  font-weight: bold
+
+.data-line
+  border-bottom: 1px solid #647085
+  padding-bottom: 0.5rem
+
+.main-container
+  width: 300px
+  height: 150px
+  position: relative
+
+.dona-container, .line-chart
+  position: absolute
+
+.line-chart
+  z-index: -1
+  top: 43%
+  left: 29%
+
+.percentage-data
+  margin-right: 0.3rem
+
+.section-data
+  color: #647085
